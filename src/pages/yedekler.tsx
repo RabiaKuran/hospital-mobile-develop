@@ -8,6 +8,10 @@ import {
   ImageBackground,
 } from 'react-native';
 
+
+
+
+
 const ProductsPage = (props: {navigation: any}) => {
   const {navigation} = props;
   const [secim, setSecim] = useState('column');
