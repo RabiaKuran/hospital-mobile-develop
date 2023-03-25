@@ -8,6 +8,7 @@ import {
   ImageBackground,
 } from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
+import MyButton from '../components/MyButton';
 //ürünler sayfası yedek kulllanılmıyor şuanlk
 const ProductsPage = (props: {navigation: any}) => {
   const {navigation} = props;
@@ -86,6 +87,7 @@ const ProductsPage = (props: {navigation: any}) => {
             <Text>Kuru Fasulye</Text>
           </ImageBackground>
         </PreviewLayout>
+      
       </View>
     </ScrollView>
   );
@@ -160,6 +162,11 @@ const styles = StyleSheet.create({
     marginBottom: 6,
     minWidth: '48%',
     textAlign: 'center',
+  },
+  loginButton: {
+    marginTop: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   selected: {
     backgroundColor: 'coral',

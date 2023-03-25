@@ -7,6 +7,7 @@ import HomePage from '../pages/HomePage';
 import ProductsPage from '../pages/ProductsPage';
 import Cart from '../pages/Cart';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import InformationAdd from '../pages/InformationAdd';
 
 
 const Stack = createStackNavigator();
@@ -68,6 +69,11 @@ const Router = () => {
             ),
           }}
         />
+         <Tab.Screen
+          name="InformationAdd"
+          component={InformationAdd}
+        />
+        
       </Tab.Navigator>
     </NavigationContainer>
   );

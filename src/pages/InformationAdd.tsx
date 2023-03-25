@@ -9,10 +9,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {FlatList, ActivityIndicator, StatusBar} from 'react-native';
 import axios from 'axios'; // paketi sayfamıza ekliyoruz
 import MyButton from '../components/MyButton';
-import InformationAdd from './InformationAdd';
 
 type Model = {
   id: string;
@@ -32,14 +30,13 @@ const Item = ({email}: ItemProps) => (
   </View>
 );
 
-const Profil = (props: {navigation: any}) => {
-  const {navigation} = props;
+const InformationAdd = (props: {navigation: any}) => {
   const [isLoading, setLoading] = useState(false);
   const [datas, setDatas] = useState<Model[]>();
   const [email, setEmail] = useState('');
   const [userName, setUserName] = useState('');
   const [phone, setPhone] = useState('');
-  const [open, setOpen] = useState(0);
+  const [status, setStatus] = useState('');
 
   // define state
   class App extends Component {
@@ -52,22 +49,6 @@ const Profil = (props: {navigation: any}) => {
     }
   }
 
-  // GET Request Using Axios HTTP // get ile veri çekme
-  const getPatient = async () => {
-    await axios
-      .get('http://10.0.2.2:8080/api/mblusers/getAllUsers')
-      .then(res => {
-        const data = res.data;
-        console.log('data geliyor');
-        console.log(res.data);
-        setDatas(res.data.data);
-      })
-      .catch(error => console.log(error));
-  };
-  useEffect(() => {
-    getPatient();
-  }, []);
-
   // Add Record Example Using React Axios
   const postPatient = (userName: any, email: any, phone: any) => {
     axios
@@ -75,6 +56,7 @@ const Profil = (props: {navigation: any}) => {
         userName: userName,
         email: email,
         telefon: phone,
+        
       })
       .then(res => {
         const data = res.data;
@@ -85,37 +67,18 @@ const Profil = (props: {navigation: any}) => {
 
   return (
     <ScrollView>
-      <View>
-        <View style={style.body}>
-          <View style={style.avatarContainer}>
-            <Text style={style.avatar}>RK</Text>
-          </View>
-          <View style={style.nameContainer}>
-            <Text style={style.name}>Rabia Kuran</Text>
-          </View>
-          <View style={style.infoContainer}>
-            <Text style={style.infoLabel}>Email:</Text>
-            <Text style={style.infoText}>rabiakuran34@gmail.com</Text>
-          </View>
-          <View style={style.infoContainer}>
-            <Text style={style.infoLabel}>Oda:</Text>
-            <Text style={style.infoText}>A-308</Text>
-          </View>
-          <View style={style.infoContainer}>
-            <Text style={style.infoLabel}>Yatış Sebebi:</Text>
-            <Text style={style.infoText}>Diyabet</Text>
-          </View>
-          <View style={style.infoContainer}>
-            <Text style={style.infoLabel}>Telefon:</Text>
-            <Text style={style.infoText}>5432229694</Text>
-          </View>
-        </View>
+      <View>     
         <View style={style.header}></View>
 
         <View style={style.formView}>
           <View style={style.header}>
             <Text style={style.title}>Informations</Text>
           </View>
+          <TextInput
+            placeholder="Oda durum"
+            onChangeText={e => setStatus(e)}
+            value={status}
+          />
           <TextInput
             placeholder="Mail"
             keyboardType="email-address"
@@ -140,23 +103,9 @@ const Profil = (props: {navigation: any}) => {
             style={style.loginButton}
             onPress={() => postPatient(userName, email, phone)}>
             <MyButton
-              textTitle="Save"
+              textTitle="SAVE"
               backgroundColor="#000"
               onPress={() => postPatient(userName, email, phone)}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={style.loginButton}
-            onPress={() =>
-              navigation.navigate('InformationAdd')
-            }
-            >
-            <MyButton
-              textTitle="Add information"
-              backgroundColor="#000"
-              onPress={() =>
-                navigation.navigate('InformationAdd')
-              }
             />
           </TouchableOpacity>
         </View>
@@ -274,4 +223,4 @@ const style = StyleSheet.create({
   },
 });
 
-export default Profil;
+export default InformationAdd;

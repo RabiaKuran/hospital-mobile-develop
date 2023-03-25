@@ -7,18 +7,22 @@ import {
   Pressable,
   View,
   Image,
+  TouchableOpacity,
 } from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
+import MyButton from '../components/MyButton';
 
 interface IProductsPageProps {
   text?: string;
+  //props: IProductsPageProps
 }
 
-const ProductsPage = (props: IProductsPageProps) => {
+const ProductsPage = (props: {navigation: any}) => {
   const [cart, setCart] = useState([] as any);
   //const [cart, setCart] = useState<string[]>([]);
   console.log('cart items:', cart);
-  const { text} = props;
+    const {navigation} = props;
+
 
   return (
     <ScrollView>
@@ -88,6 +92,20 @@ const ProductsPage = (props: IProductsPageProps) => {
               source={{uri: item.image}}
             />
             <Text>{item.name}</Text>
+            <TouchableOpacity
+            style={styles.loginButton}
+            onPress={() =>
+              navigation.navigate('Cart')
+            }
+            >
+            <MyButton
+              textTitle="Sepete git"
+              backgroundColor="#000"
+              onPress={() =>
+                navigation.navigate('Cart')
+              }
+            />
+          </TouchableOpacity>
           </View>
         ),
       )}
@@ -99,6 +117,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+  },
+  loginButton: {
+    marginTop: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
