@@ -87,12 +87,17 @@ const ProductsPage = (props: {navigation: any}) => {
             | undefined;
         }) => (
           <View>
+
             <Image
               style={{width: 100, height: 100, borderRadius: 8}}
               source={{uri: item.image}}
             />
             <Text>{item.name}</Text>
-            <TouchableOpacity
+            
+          </View>
+        ),
+      )}
+      <TouchableOpacity
             style={styles.loginButton}
             onPress={() =>
               navigation.navigate('Cart')
@@ -106,9 +111,6 @@ const ProductsPage = (props: {navigation: any}) => {
               }
             />
           </TouchableOpacity>
-          </View>
-        ),
-      )}
     </ScrollView>
   );
 };

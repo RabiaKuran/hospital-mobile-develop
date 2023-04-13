@@ -152,7 +152,7 @@ const Profil = (props: {navigation: any}) => {
             }
             >
             <MyButton
-              textTitle="Add information"
+              textTitle="Add informationn"
               backgroundColor="#000"
               onPress={() =>
                 navigation.navigate('InformationAdd')

@@ -69,10 +69,7 @@ const Router = () => {
             ),
           }}
         />
-         <Tab.Screen
-          name="InformationAdd"
-          component={InformationAdd}
-        />
+       
         
       </Tab.Navigator>
     </NavigationContainer>
