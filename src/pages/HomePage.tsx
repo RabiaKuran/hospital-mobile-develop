@@ -1,111 +1,102 @@
 import React, {Component, useEffect, useState} from 'react';
 import {
   Text,
-  FlatList,  View,
+  FlatList,
+  View,
   StyleSheet,
   ActivityIndicator,
   StatusBar,
 } from 'react-native';
-import axios from 'axios'; // paketi sayfamıza ekliyoruz
+import axios from 'axios';
+import {TouchableOpacity} from 'react-native';
 import { ColorPalette } from '../theme/ColorPalette';
-
-type Movie = {
-  id: string;
-  adSoyad: string;
-  gorev: string;
-};
-type ItemData = {
-  id: string;
-  adSoyad: string;
-};
-
-const getItem = (_data: unknown, index: number): ItemData => ({
-  id: Math.random().toString(12).substring(0),
-  adSoyad: `Item ${index + 1}`,
-});
-
-const getItemCount = (_data: unknown) => 50;
-
-type ItemProps = {
-  adSoyad: string;
-};
-
-const Item = ({adSoyad}: ItemProps) => (
-  <View style={styles.item}>
-    <Text style={styles.title}>{adSoyad}</Text>
-  </View>
-);
 
 const HomePage = (props: {navigation: any}) => {
   const {navigation} = props;
   const [isLoading, setLoading] = useState(false);
-  const [datas, setDatas] = useState<Movie[]>();
-  // define state
-  class App extends Component {
-    state = {
-      emp: [],
-    };
 
-    constructor() {
-      super(props);
-    }
-  }
 
-  // GET Request Using Axios HTTP // get ile veri çekme
-  const getEmployee = async () => {
-    await axios
-      .get('http://10.0.2.2:8080/api/employees/getall')
-      .then(res => {
-        const data = res.data;
-        //this.setState({ emps });
-        console.log('data geliyorrr');
-        console.log(res.data);
-        setDatas(res.data.data);
-      })
-      .catch(error => console.log(error));
+  const openNewPage = (pageTitle: string) => {
+    navigation.navigate('Employees', { employee: pageTitle });
   };
-
-  useEffect(() => {
-    getEmployee();
-  }, []);
-
   return (
     <View style={{flex: 1, padding: 1}}>
-      <Text style={{color:ColorPalette.black, padding: 10, fontSize: 30, textAlign: 'center',backgroundColor: ColorPalette.gray}}>ÇALIŞANLAR</Text>
+      <Text
+        style={{
+          color: ColorPalette.gray,
+          padding: 10,
+          fontSize: 30,
+          textAlign: 'center',
+          backgroundColor: '#C5CAE9',
+        }}>
+        Menü
+      </Text>
 
       {isLoading ? (
         <ActivityIndicator />
       ) : (
-        <FlatList
-          data={datas}
-          //keyExtractor={({id}) => id}
-          keyExtractor={item => item.id}
-          renderItem={({item}) => (
-            <Item adSoyad={item.adSoyad + " =>"+ item.gorev} />       
-          )}
-          
-        />
+        <View style={styles.container}>
+          <TouchableOpacity
+            style={[styles.button, {backgroundColor: '#FFCDD2'}]}
+            onPress={() => openNewPage('Doktor')}>
+            <Text style={styles.buttonText}>Doktorlar</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.button, {backgroundColor: '#F8BBD0'}]}
+            onPress={() => openNewPage('Hemşireler')}>
+            <Text style={styles.buttonText}>Hemşireler</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.button, {backgroundColor: '#E1BEE7'}]}
+            onPress={() => openNewPage('Baş Hemşire')}>
+            <Text style={styles.buttonText}>Hemşire Yardımcıları</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.button, {backgroundColor: '#D1C4E9'}]}
+            onPress={() => openNewPage('Hizmetliler')}>
+            <Text style={styles.buttonText}>Hizmetliler</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.button, {backgroundColor: '#BBDEFB'}]}
+            onPress={() => openNewPage('Diğer')}>
+            <Text style={styles.buttonText}>Diğer</Text>
+          </TouchableOpacity>
+        </View>
       )}
-     
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: StatusBar.currentHeight,
-  },
   item: {
     backgroundColor: '#f9c2ff',
-    height: 100,
+
+    height: 200,
     justifyContent: 'center',
     marginVertical: 6,
     marginHorizontal: 10,
-    padding: 16,
+    padding: 10,
   },
   title: {
     fontSize: 20,
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  button: {
+    width: 300,
+    height: 80,
+    borderRadius: 10,
+    marginBottom: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'white',
   },
 });
 
