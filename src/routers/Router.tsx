@@ -26,12 +26,18 @@ const Router = () => {
         <Stack.Screen
           name="Employees"
           component={(props: JSX.IntrinsicAttributes & { navigation: string; route: any; }) => <Employees {...props} />}
-          options={{ title: 'Çalışanlar' }}
+          options={{ title: 'Çalışanlar', headerStyle:{
+            backgroundColor: 'tomato'
+          }, headerTintColor: "white"
+         }}
         />
+        
          <Stack.Screen
           name="EmployeeDetails"
           component={(props: JSX.IntrinsicAttributes & { navigation: string; route: any; }) => <EmployeeDetails {...props} />}
-          options={{ title: 'Çalışan Detay' }}
+          options={{ title: 'Çalışan Detay',headerStyle:{
+            backgroundColor: 'tomato'
+          }, headerTintColor: "white" }}
         />
       </Stack.Navigator>
     </NavigationContainer>
@@ -46,6 +52,9 @@ const MainScreen = () => {
         component={HomePage}
         options={{
           title: 'Ana Sayfa',
+          headerStyle:{
+            backgroundColor: 'tomato'
+          }, headerTintColor: "white",
           tabBarInactiveTintColor: 'gray',
           tabBarActiveTintColor: 'tomato',
           tabBarIcon: ({ color }) => (
@@ -58,6 +67,9 @@ const MainScreen = () => {
         component={ProductsPage}
         options={{
           title: 'Kategoriler',
+          headerStyle:{
+            backgroundColor: 'tomato'
+          }, headerTintColor: "white",
           tabBarInactiveTintColor: 'gray',
           tabBarActiveTintColor: 'tomato',
           tabBarIcon: ({ color }) => (
@@ -70,6 +82,9 @@ const MainScreen = () => {
         component={Cart}
         options={{
           title: 'Sepet',
+          headerStyle:{
+            backgroundColor: 'tomato'
+          }, headerTintColor: "white",
           tabBarInactiveTintColor: 'gray',
           tabBarActiveTintColor: 'tomato',
           tabBarIcon: ({ color }) => (
@@ -83,6 +98,9 @@ const MainScreen = () => {
         options={{
           title: 'Profil',
           tabBarBadge: 1,
+          headerStyle:{
+            backgroundColor: 'tomato'
+          }, headerTintColor: "white",
           tabBarInactiveTintColor: 'gray',
           tabBarActiveTintColor: 'tomato',
           tabBarIcon: ({ color }) => (

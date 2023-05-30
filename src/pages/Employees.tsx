@@ -1,56 +1,49 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Text,
   FlatList,
   View,
   StyleSheet,
   ActivityIndicator,
-  StatusBar,
   TouchableOpacity,
 } from 'react-native';
 import axios from 'axios';
-import { ColorPalette } from '../theme/ColorPalette';
+import {ColorPalette} from '../theme/ColorPalette';
 
 type Employees = {
   id: string;
   adSoyad: string;
   gorev: string;
+  state: string;
+  meslek: string;
+  resim: string;
+  queue: string;
 };
 
 type ItemProps = {
   adSoyad: string;
   gorev: string;
+  state: string;
   onPress: () => void;
+  meslek: string;
+  resim: string;
+  queue: string;
 };
 
-const Item = ({ adSoyad, gorev, onPress }: ItemProps) => (
-  <TouchableOpacity style={styles.item} onPress={onPress}>
-    <View>
-      <Text style={styles.title}>{adSoyad}</Text>
-      <Text>{gorev}</Text>
-    </View>
-    <View style={styles.buttonContainer}>
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Telefon</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>E-posta</Text>
-      </TouchableOpacity>
-    </View>
-  </TouchableOpacity>
-);
-
-const Employees = (props: { navigation: any; route: any }) => {
+const Employees = (props: {navigation: any; route: any}) => {
   const [isLoading, setLoading] = useState(false);
   const [datas, setDatas] = useState<Employees[]>([]);
-  const { employee } = props.route?.params;
+  const {employee} = props.route?.params;
 
   const getEmployee = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('http://10.0.2.2:8080/api/employees/getall');
+      const response = await axios.get(
+        'http://10.0.2.2:8080/api/employees/getall',
+      );
       setDatas(response.data.data);
-      console.log(datas)
+
+      console.log(datas);
     } catch (error) {
       console.log(error);
     } finally {
@@ -63,16 +56,42 @@ const Employees = (props: { navigation: any; route: any }) => {
   }, []);
 
   const handleItemPress = (item: Employees) => {
-    props.navigation.navigate('EmployeeDetails', { employee: item });
+    console.log(item);
+    props.navigation.navigate('EmployeeDetails', {employee: item});
   };
-
-  const renderItem = ({ item }: { item: Employees }) => {
-    if (item.gorev === employee) {
+  const Item = ({adSoyad, gorev, state, onPress, meslek, resim,queue}: ItemProps) => (
+    <TouchableOpacity style={styles.item} onPress={onPress}>
+      <View>
+        <Text style={styles.title}>{adSoyad}</Text>
+        <Text>{gorev}</Text>
+      </View>
+      <View style={styles.buttonContainer}>
+        {state === 'Meşgul' ? (
+          <TouchableOpacity style={styles.buttonState}>
+            <Text style={styles.buttonText}>{state}</Text>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity style={styles.buttonState2}>
+            <Text style={styles.buttonText}>{state}</Text>
+          </TouchableOpacity>
+        )}
+        <TouchableOpacity style={styles.button} onPress={onPress}>
+          <Text style={styles.buttonText}>Detay Gör</Text>
+        </TouchableOpacity>
+      </View>
+    </TouchableOpacity>
+  );
+  const renderItem = ({item}: {item: Employees}) => {
+    if (item?.meslek === employee) {
       return (
         <Item
           adSoyad={item.adSoyad}
           gorev={item.gorev}
           onPress={() => handleItemPress(item)}
+          state={item.state}
+          meslek={item.meslek}
+          resim={item.resim}
+          queue = {item.queue}
         />
       );
     } else {
@@ -81,25 +100,13 @@ const Employees = (props: { navigation: any; route: any }) => {
   };
 
   return (
-    <View style={{ flex: 1, padding: 1 }}>
-      <Text
-        style={{
-          color: ColorPalette.gray,
-          padding: 10,
-          fontSize: 24,
-          textAlign: 'center',
-          backgroundColor: '#f9c2ff',
-        }}
-      >
-        ÇALIŞANLAR
-      </Text>
-
+    <View style={{flex: 1}}>
       {isLoading ? (
         <ActivityIndicator />
       ) : (
         <FlatList
           data={datas}
-          keyExtractor={(item) => item.id}
+          keyExtractor={item => item.id}
           renderItem={renderItem}
         />
       )}
@@ -120,12 +127,25 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
+    fontWeight: 'bold',
   },
   buttonContainer: {
     flexDirection: 'row',
   },
   button: {
-    backgroundColor: '#ccc',
+    backgroundColor: ColorPalette.gray,
+    borderRadius: 8,
+    padding: 8,
+    marginLeft: 8,
+  },
+  buttonState: {
+    backgroundColor: ColorPalette.red3,
+    borderRadius: 8,
+    padding: 8,
+    marginLeft: 8,
+  },
+  buttonState2: {
+    backgroundColor: ColorPalette.green3,
     borderRadius: 8,
     padding: 8,
     marginLeft: 8,

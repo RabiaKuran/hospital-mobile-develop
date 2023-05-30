@@ -15,7 +15,6 @@ const HomePage = (props: {navigation: any}) => {
   const {navigation} = props;
   const [isLoading, setLoading] = useState(false);
 
-
   const openNewPage = (pageTitle: string) => {
     navigation.navigate('Employees', { employee: pageTitle });
   };
@@ -43,17 +42,17 @@ const HomePage = (props: {navigation: any}) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.button, {backgroundColor: '#F8BBD0'}]}
-            onPress={() => openNewPage('Hemşireler')}>
+            onPress={() => openNewPage('Hemşire')}>
             <Text style={styles.buttonText}>Hemşireler</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.button, {backgroundColor: '#E1BEE7'}]}
-            onPress={() => openNewPage('Baş Hemşire')}>
+            onPress={() => openNewPage('Hemşire Yardımcısı')}>
             <Text style={styles.buttonText}>Hemşire Yardımcıları</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.button, {backgroundColor: '#D1C4E9'}]}
-            onPress={() => openNewPage('Hizmetliler')}>
+            onPress={() => openNewPage('Hizmetli')}>
             <Text style={styles.buttonText}>Hizmetliler</Text>
           </TouchableOpacity>
           <TouchableOpacity

@@ -11,6 +11,8 @@ import {
 } from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import MyButton from '../components/MyButton';
+import IconButton from '../button/IconButton';
+import IconButtonProduct from '../button/IconButtonProduct';
 
 interface IProductsPageProps {
   text?: string;
@@ -22,12 +24,27 @@ const ProductsPage = (props: {navigation: any}) => {
   //const [cart, setCart] = useState<string[]>([]);
   console.log('cart items:', cart);
     const {navigation} = props;
-
+    const handlePressPersonelProducts = () => {
+      console.log("button")
+    };
+    const handlePressProducts = () => {
+      console.log("button")
+    };
 
   return (
     <ScrollView>
       <SafeAreaView style={styles.container}>
-        <Text style={{textAlign: 'center', fontSize: 20}}>Ürünler</Text>
+        <Text style={{textAlign: 'center', fontSize: 24, fontWeight: "bold"}}>Ürünler</Text>
+        <View style={styles.buttonContainer}>
+      <TouchableOpacity
+        style={{flex: 1, alignItems: 'flex-start', justifyContent: 'flex-start'}}>
+        <IconButtonProduct iconName="" text="Kişisel Ürünler" onPress={handlePressPersonelProducts} />
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={{flex: 1, alignItems: 'flex-end', justifyContent: 'flex-start'}}>
+        <IconButtonProduct iconName="" text="Yiyecek ve içecekler" onPress={handlePressProducts} />
+      </TouchableOpacity>
+      </View>
         {images.map(item => (
           <Pressable
             key={item.id}
@@ -124,6 +141,11 @@ const styles = StyleSheet.create({
     marginTop: 50,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 20,
   },
 });
 

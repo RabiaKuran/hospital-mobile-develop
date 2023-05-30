@@ -272,6 +272,6 @@ const style = StyleSheet.create({
   infoText: {
     fontSize: 16,
   },
-});
+})
 
 export default Profil;
