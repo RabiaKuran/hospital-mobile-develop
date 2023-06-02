@@ -5,6 +5,7 @@ import IconButton from '../button/IconButton';
 
 const EmployeeDetails = (props: {route: any}) => {
   const {employee} = props.route.params;
+  
   const handlePressCall = () => {
     const phoneNumber = employee.telefon;
     Linking.openURL(`tel:${phoneNumber}`);

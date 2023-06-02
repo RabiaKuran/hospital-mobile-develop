@@ -3,34 +3,28 @@ import {
   SafeAreaView,
   StyleSheet,
   Text,
-
   View,
   Image,
   TouchableOpacity,
 } from 'react-native';
 import {FlatList, ScrollView} from 'react-native-gesture-handler';
 import MyButton from '../components/MyButton';
-import IconButton from '../button/IconButton';
 import IconButtonProduct from '../button/IconButtonProduct';
 import axios from 'axios';
 import {ColorPalette} from '../theme/ColorPalette';
 
-
-interface IProductsPageProps {
-  text?: string;
-
-}
 type Products = {
   id: string;
   urunKategori: string;
   urunAdi: string;
   urunBilgi: string;
   urunResmi: string;
+  quantity?: number;
 };
 
 const ProductsPage = (props: {navigation: any}) => {
   const [cart, setCart] = useState([] as any);
-  console.log('cart items:', cart);
+  console.log('cart', cart);
   const {navigation} = props;
   const [isLoading, setLoading] = useState(false);
   const [datas, setDatas] = useState<Products[]>([]);
@@ -48,10 +42,14 @@ const ProductsPage = (props: {navigation: any}) => {
     setSelectedCategory('Yemek Bölümü');
   };
   const handleAddToCart = (product: Products) => {
-    setCart([...cart, product]);
-    console.log('----------------------------------------------');
-    console.log(cart);
-    console.log('----------------------------------------------');
+    const existingProduct = cart.find((item: Products) => item.id === product.id);
+    if (existingProduct) {
+      existingProduct.quantity += 1; // Ürün zaten sepette varsa miktarı artır
+      setCart([...cart]);
+    } else {
+      product.quantity = 1; // Yeni ürünse miktarı 1 olarak ayarla
+      setCart([...cart, product]);
+    }
   };
   const getEmployee = async () => {
     try {
@@ -76,12 +74,7 @@ const ProductsPage = (props: {navigation: any}) => {
   const handleProductPress = (product: Products) => {
     navigation.navigate('ProductDetails', {product});
   };
-  const handleItemPress = (item: Products) => {
-    console.log(item);
-    props.navigation.navigate('Cart', {cart: cart});
-    console.log("itwwwwwwwwwwwwwwmmmmmmmmmmmemmmmmmmmmmmm");
-    console.log(item);
-  };
+ 
 
   const renderProductItem = ({item}: {item: Products}) => (
     <TouchableOpacity
@@ -169,11 +162,12 @@ const ProductsPage = (props: {navigation: any}) => {
 
       <TouchableOpacity
         style={styles.loginButton}
-        onPress={() => navigation.navigate('Cart')}>
+        
+        onPress={() => navigation.navigate('Cart', cart)}>
         <MyButton
           textTitle="Sepete git"
           backgroundColor="#000"
-          onPress={() => handleItemPress(cart)}
+        
         />
       </TouchableOpacity>
     </ScrollView>
@@ -197,7 +191,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
   },
-  
+
   productContainer: {
     flexDirection: 'row',
     alignItems: 'center',

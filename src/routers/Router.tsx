@@ -105,7 +105,9 @@ const MainScreen = () => {
       />
       <Tab.Screen
         name="Cart"
-        component={Cart}
+        component={(
+            props: JSX.IntrinsicAttributes & {navigation: string; route: any},
+          ) => <Cart {...props} />}
         options={{
           title: 'Sepet',
           headerStyle: {
