@@ -1,5 +1,4 @@
 export enum ColorPalette {
-  albarakaOrange = '#ff0000',
   darkOrange = '#ff4000',
   lighterGray = '#d5d3d3',
   lightGray = '#b2b3b6',
@@ -11,16 +10,11 @@ export enum ColorPalette {
   darkBlue = '#1f5f99',
   darkBlack = '#000000',
   darkRed2 = 'CF1207',
-
   aliceBlue = '#f2faff',
-
-  darkWhite = '#EAF0F4',
-
   secondaryGreen = '#02bc77',
   greenBack = '#f0fdf8',
   darkRed = '#A71930',
   orangeSmoke = '#fff5f5',
-
   hoverDropdown = '#F7F6FA',
   circleGray = '#EDEDED',
   albaraka = 'linear-gradient=(90deg, rgba(255,88,0,1) 0%, rgba(198,6,8,1) 50%, rgba(198,6,8,1) 100%)',

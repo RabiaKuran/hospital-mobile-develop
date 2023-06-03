@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { SafeAreaView, FlatList, Text, View, StyleSheet, Image } from 'react-native';
+import React from 'react';
+import { SafeAreaView, Text, View, StyleSheet, Image } from 'react-native';
 
 
 

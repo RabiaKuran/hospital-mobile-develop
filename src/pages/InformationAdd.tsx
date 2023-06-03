@@ -1,7 +1,5 @@
-import React, {Component, useEffect, useState} from 'react';
-import * as Yup from 'yup';
+import React, {Component, useState} from 'react';
 import {
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,

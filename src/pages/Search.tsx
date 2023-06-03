@@ -1,4 +1,4 @@
-import React, {Component, useEffect, useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import {
   Text,
   View,
@@ -8,7 +8,6 @@ import {
   ImageBackground,
 } from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
-import MyButton from '../components/MyButton';
 //ürünler sayfası yedek kulllanılmıyor şuanlk
 const ProductsPage = (props: {navigation: any}) => {
   const {navigation} = props;

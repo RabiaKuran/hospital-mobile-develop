@@ -1,7 +1,5 @@
 import React, {Component, useEffect, useState} from 'react';
-import * as Yup from 'yup';
 import {
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
@@ -9,10 +7,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {FlatList, ActivityIndicator, StatusBar} from 'react-native';
 import axios from 'axios'; // paketi sayfamıza ekliyoruz
 import MyButton from '../components/MyButton';
-import InformationAdd from './InformationAdd';
 
 type Model = {
   id: string;

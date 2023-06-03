@@ -4,11 +4,9 @@ import {
   View,
   Text,
   StyleSheet,
-  Image,
   TouchableOpacity,
   Dimensions,
   TextInput,
-  Button,
 } from 'react-native';
 //Components
 import MyButton from '../components/MyButton';

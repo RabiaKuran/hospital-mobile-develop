@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import MyButton from '../components/MyButton';
 import {ColorPalette} from '../theme/ColorPalette';
 import {Alert} from 'react-native';
@@ -131,13 +131,12 @@ const Cart = (props: {route: any; navigation: any}) => {
         {isCartEmpty ? (
           <View style={styles.emptyCartContainer}>
             <Text style={styles.emptyCartText}>
-            Sepetinizde ürün bulunmamaktadır. 
+              Sepetinizde ürün bulunmamaktadır.
             </Text>
             <Text style={styles.emptyCartText}>
               Ürün eklemek için lüften kategoriler sayfasına geçiş yapın.
             </Text>
           </View>
-          
         ) : (
           <View style={styles.container}>
             <FlatList
@@ -282,13 +281,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 50,
-    margin: 20
+    margin: 20,
   },
   emptyCartText: {
     fontSize: 18,
     fontWeight: 'bold',
     color: ColorPalette.whiteSmoke,
-    textAlign: 'center'
+    textAlign: 'center',
   },
 });
 

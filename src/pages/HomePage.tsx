@@ -1,11 +1,11 @@
-import React, {Component, useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {
   Text,
-  FlatList,
+
   View,
   StyleSheet,
   ActivityIndicator,
-  StatusBar,
+
 } from 'react-native';
 import axios from 'axios';
 import {TouchableOpacity} from 'react-native';
