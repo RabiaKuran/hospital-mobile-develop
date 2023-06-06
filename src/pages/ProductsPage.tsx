@@ -20,6 +20,10 @@ type Products = {
   urunBilgi: string;
   urunResmi: string;
   quantity?: number;
+  tarih?: any;
+  durum?: any;
+  odaNo?: string;
+  notifications?: string;
 };
 
 const ProductsPage = (props: {navigation: any}) => {
@@ -29,6 +33,17 @@ const ProductsPage = (props: {navigation: any}) => {
   const [isLoading, setLoading] = useState(false);
   const [datas, setDatas] = useState<Products[]>([]);
   const [selectedCategory, setSelectedCategory] = useState('Yemek Bölümü');
+  const currentDate = new Date();
+  const options: Intl.DateTimeFormatOptions = {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false,
+  };
+  const formattedDate = currentDate.toLocaleDateString('tr-TR', options);
 
   const filteredProducts = datas.filter(
     item => item.urunKategori === selectedCategory,
@@ -45,9 +60,15 @@ const ProductsPage = (props: {navigation: any}) => {
     const existingProduct = cart.find((item: Products) => item.id === product.id);
     if (existingProduct) {
       existingProduct.quantity += 1; // Ürün zaten sepette varsa miktarı artır
+    
+      
       setCart([...cart]);
     } else {
       product.quantity = 1; // Yeni ürünse miktarı 1 olarak ayarla
+      product.tarih = formattedDate
+      product.durum = "Onaylanmadı"
+      product.odaNo= "A-308"
+      product.notifications="Not eklenmedi"
       setCart([...cart, product]);
     }
   };

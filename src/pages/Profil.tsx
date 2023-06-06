@@ -15,38 +15,13 @@ type Model = {
   email: string;
   userName: string;
 };
-type ItemData = {
-  id: string;
-  email: string;
-};
-type ItemProps = {
-  email: string;
-};
-const Item = ({email}: ItemProps) => (
-  <View style={style.item}>
-    <Text style={style.title}>{email}</Text>
-  </View>
-);
 
 const Profil = (props: {navigation: any}) => {
   const {navigation} = props;
-  const [isLoading, setLoading] = useState(false);
   const [datas, setDatas] = useState<Model[]>();
   const [email, setEmail] = useState('');
   const [userName, setUserName] = useState('');
   const [phone, setPhone] = useState('');
-  const [open, setOpen] = useState(0);
-
-  // define state
-  class App extends Component {
-    state = {
-      emp: [],
-    };
-
-    constructor() {
-      super(props);
-    }
-  }
 
   // GET Request Using Axios HTTP // get ile veri çekme
   const getPatient = async () => {
@@ -143,16 +118,11 @@ const Profil = (props: {navigation: any}) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={style.loginButton}
-            onPress={() =>
-              navigation.navigate('InformationAdd')
-            }
-            >
+            onPress={() => navigation.navigate('InformationAdd')}>
             <MyButton
               textTitle="Add informationn"
               backgroundColor="#000"
-              onPress={() =>
-                navigation.navigate('InformationAdd')
-              }
+              onPress={() => navigation.navigate('InformationAdd')}
             />
           </TouchableOpacity>
         </View>
@@ -268,6 +238,6 @@ const style = StyleSheet.create({
   infoText: {
     fontSize: 16,
   },
-})
+});
 
 export default Profil;

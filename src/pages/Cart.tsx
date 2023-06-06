@@ -8,10 +8,11 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import MyButton from '../components/MyButton';
 import {ColorPalette} from '../theme/ColorPalette';
 import {Alert} from 'react-native';
+import axios from 'axios'; // paketi sayfamıza ekliyoruz
 
 type Products = {
   id: string;
@@ -24,6 +25,23 @@ type Products = {
 const Cart = (props: {route: any; navigation: any}) => {
   const [cart, setCart] = useState(props.route.params || []);
   const {navigation} = props;
+  const [currentDatee, setCurrentDate] = useState(new Date());
+  const currentDate = new Date();
+  const [stateCart, setStateCart] = useState(false);
+  const options: Intl.DateTimeFormatOptions = {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false,
+  };
+
+  const formattedDate = currentDate.toLocaleDateString('tr-TR', options);
+
+  //const formattedDate = currentDate.toLocaleDateString('tr-TR'); // Türkçe format: '4.06.2023'
+  //console.log(currentDate); // Örneğin: 2023-06-04T10:30:00.000Z
 
   const handleProductPress = (product: Products) => {
     navigation.navigate('ProductDetails', {product});
@@ -34,9 +52,6 @@ const Cart = (props: {route: any; navigation: any}) => {
       (item: {id: string}) => item.id !== product.id,
     );
     setCart(updatedCart);
-    console.log('handleRemoveToCarthandleRemoveToCarthandleRemoveToCart');
-    console.log(cart);
-    console.log('handleRemoveToCarthandleRemoveToCarthandleRemoveToCart');
   };
 
   const handleIncreaseQuantity = (product: Products) => {
@@ -59,18 +74,51 @@ const Cart = (props: {route: any; navigation: any}) => {
     });
     setCart(updatedCart);
   };
-  const saveOrdersToDatabase = (cart: any) => {
-    // Veritabanı kaydetme işlemlerini burada gerçekleştirin
-    console.log('Siparişler veritabanına kaydedildi:', cart);
-    // İletişim kutusu göstermek için gereken kodu buraya ekleyin
-    Alert.alert('Sipariş Durumu', 'Siparişleriniz başarıyla gönderildi.', [
-      {
-        text: 'Tamam',
-        onPress: () => setCart([]),
-      },
-    ]);
-  };
 
+  useEffect(() => {
+    setCurrentDate(new Date());
+  }, []);
+
+  const handlePostCart = () => {
+    cart.forEach((product: any) => {
+      axios
+        .post('http://10.0.2.2:8080/api/notifications/add', product)
+        .then(response => {
+          setStateCart(true);
+          console.log('Ürün gönderildi:', response.data);
+        })
+        .catch(error => {
+          console.error('Ürün gönderilemedi:', error);
+          // İstek başarısız olduysa hata işlemleri yapabilirsiniz
+        });
+    });
+    Alert.alert(
+      'Sipariş Durumu',
+      'Siparişleriniz başarıyla gönderildi.',
+      [
+        {
+          text: 'Tamam',
+          onPress: () => setCart([]),
+        
+        },
+      ],
+      
+    )
+    /*{stateCart === true ? (Alert.alert(
+      'Sipariş Durumu',
+      'Siparişleriniz başarıyla gönderildi.',
+      [
+        {
+          text: 'Tamam',
+          onPress: () => setCart([]),
+        
+        },
+      ],
+      
+    )):(<></>)
+  
+  }*/
+  };
   const isCartEmpty = cart.length === 0;
   const renderProductItem = ({item}: {item: Products}) => (
     <TouchableOpacity
@@ -107,6 +155,7 @@ const Cart = (props: {route: any; navigation: any}) => {
       </View>
     </TouchableOpacity>
   );
+
   return (
     <ScrollView>
       <SafeAreaView style={{backgroundColor: '#9370db', flex: 1}}>
@@ -149,9 +198,7 @@ const Cart = (props: {route: any; navigation: any}) => {
 
         <View style={{alignItems: 'center', justifyContent: 'center'}}></View>
 
-        <TouchableOpacity
-          style={styles.loginButton}
-          onPress={() => saveOrdersToDatabase(cart)}>
+        <TouchableOpacity style={styles.loginButton} onPress={handlePostCart}>
           <MyButton textTitle="Onayla" backgroundColor="#000" />
         </TouchableOpacity>
         <View
